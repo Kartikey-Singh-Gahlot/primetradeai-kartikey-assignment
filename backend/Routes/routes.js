@@ -5,8 +5,8 @@ const {signin, signup} = require('../Controllers/authController.js');
 
 routes.get("/", home);
 
-routes.get("/auth/signin", signin);
-routes.get("/auth/signup", signup);
+routes.post("/auth/signin", signin);
+routes.post("/auth/signup", signup);
 
 
 
