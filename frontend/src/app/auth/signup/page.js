@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-export default function signup(){
+export default function Signup(){
   
     const router = useRouter();
 
@@ -12,7 +12,7 @@ export default function signup(){
         const unp = await fetch(`${process.env.NEXT_PUBLIC_BACKENDURL}/auth/checkAuth`, {method:"GET", credentials:"include"});
         const pr = await unp.json();
         if(pr.status){
-         router.push("/"); 
+           router.push("/"); 
         }
         else{
             return;
@@ -41,14 +41,31 @@ export default function signup(){
         }
     }
 
+    async function trgrSubmission(e){
+       e.preventDefault();
+       const unp = await fetch(`${process.env.NEXT_PUBLIC_BACKENDURL}/auth/signup`, {method:"POST", credentials:"include", headers:{"Content-Type": "application/json"}, body: JSON.stringify({name:formData.name, email:formData.email, password:formData.password, adminKey:formData.adminKey})});
+       const pr  = await unp.json();
+       alert(pr.body);
+       if(pr.status){
+        console.log(pr);
+          setTimeout(()=>{
+             router.push("/");
+          },1000)
+       }
+       else{
+        return;
+       }
+    }
+
     const [formData, setFormData] = useState({name:"", email:"", password:"", adminKey:"" , choice:"User", showPass:false});
 
     return(
         <main className="flex flex-col h-screen overflow-hidden">
-             <header className="formNavBar"> </header>
+             <header className="headerBar"> </header>
              <div className="formWrapper">
-                 <form className="formBox">
-                       <input className="credentialInput"  type="text" name="name" onChange={(e)=>{trgrChange(e)}} placeholder="Enter your name" value={formData.name}/>
+                 <form className="formBox" onSubmit={trgrSubmission}>
+                       <label className="w-full text-center text-3xl">Welcome Onboard </label>
+                       <input className="credentialInput" autoFocus type="text" name="name" onChange={(e)=>{trgrChange(e)}} placeholder="Enter your name" value={formData.name}/>
                        <input className="credentialInput"  type="email" name="email" onChange={(e)=>{trgrChange(e)}} placeholder="Enter your email" value={formData.email}/>
                        <input className="credentialInput"  type={(formData.showPass)?"text":"password"} name="password" onChange={(e)=>{trgrChange(e)}}  placeholder="Enter your password" value={formData.password}/>
                         
@@ -56,7 +73,7 @@ export default function signup(){
                        
                        <div className="choiceInputWrapper">
                         
-                           <h1 onClick={trgrShowPass} className="showPassButton">{(formData.showPass)?"Hide Password":"Show Password"}</h1>
+                           <h1 onClick={trgrShowPass} className="showPassButton">{(formData.showPass)?"✖ Hide Password":"✔ Show Password"}</h1>
 
                            <select className="choiceInput" name="choice"  value={formData.choice} onChange={(e)=>{trgrChange(e)}}>
                                <option>Admin</option>
@@ -66,7 +83,7 @@ export default function signup(){
                       
                        <button className="submitButton">SignUp</button>
                        
-                       <h1 className="suggestionText">Already have an account ? <Link href="/auth/signin">Login</Link></h1>
+                       <h1 className="suggestionText">Already have an account ? <Link className="underline font-semibold" href="/auth/signin">Login</Link></h1>
                  </form>
              </div>
              
