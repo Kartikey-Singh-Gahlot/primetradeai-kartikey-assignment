@@ -1,5 +1,8 @@
-const home = (req, res)=>{
-    res.send("Home");
-}
+const userModel = require('../Models/userModel.js');
+const notesModel = require('../Models/notesModel.js');
+const jwt = require('jsonwebtoken');
+const  mongoose  = require('mongoose');
+require('dotenv').config();
 
-module.exports = {home};
+
+

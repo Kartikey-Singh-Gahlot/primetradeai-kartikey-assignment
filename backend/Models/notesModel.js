@@ -5,4 +5,4 @@ const notesSchema = new mongoose.Schema({
     content:{type:String, default:"empty"}
 });
 
-module.exports = new mongoose.Model("notes", notesSchema)
+module.exports = new mongoose.Model("notes", notesSchema);
