@@ -10,7 +10,7 @@ const signup = async (req, res)=>{
    try{
      const salt = await bcrypt.genSalt();
      const hashedPassword = await bcrypt.hash(password,salt);
-     const user = new userModel({name, email, hashedPassword, admin })
+     const user = new userModel({name, email, password:hashedPassword, admin })
      await user.save();
      const token = jwt.sign({email, admin}, process.env.SECRETKEY);
      const cookieDetails = {
@@ -36,7 +36,7 @@ const signup = async (req, res)=>{
 const signin = async (req, res)=>{
   const {email, password} = req.body;
   try{
-    const user = await userModel.find({email,password});
+    const user = await userModel.findOne({email,password});
     const valid = await bcrypt.compare(password, user.password);
     if(valid){
       const token = jwt.sign({email, admin}, process.env.SECRETKEY);

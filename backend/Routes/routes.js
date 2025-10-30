@@ -5,8 +5,8 @@ const {signin, signup, signout, checkAuth} = require('../Controllers/authControl
 
 routes.post("/auth/signin", signin);
 routes.post("/auth/signup", signup);
-routes.post("auth/signout", signout);
-routes.post("auth/checkAuth",checkAuth );
+routes.post("/auth/signout", signout);
+routes.get("/auth/checkAuth",checkAuth );
 
 
 

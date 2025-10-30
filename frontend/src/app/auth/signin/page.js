@@ -26,20 +26,42 @@ export default function signin(){
         });
     }
 
-    const [formData, setFormData] = useState({name:"", email:"", password:"", adminKey:""});
+    function trgrShowPass(){
+        if(formData.showPass){
+            setFormData((prev)=>{
+                return {...prev,showPass:false}
+            })
+        }
+        else{
+            setFormData((prev)=>{
+                return {...prev, showPass:true}
+            })
+        }
+    }
+
+    const [formData, setFormData] = useState({email:"", password:"", adminKey:"" , choice:"User" , showPass:false});
 
     return(
-        <main className="h-screen overflow-hidden">
+        <main className="flex flex-col h-screen overflow-hidden">
              <header className="formNavBar"> </header>
              <div className="formWrapper">
                  <form className="formBox">
-                       <input className="credentialInput" name="name" onChange={(e)=>{trgrChange(e)}} placeholder="Enter your name" value={formData.name}/>
-                       <input className="credentialInput" name="email" onChange={(e)=>{trgrChange(e)}} placeholder="Enter your email" value={formData.email}/>
-                       <input className="credentialInput" name="password" onChange={(e)=>{trgrChange(e)}} placeholder="Enter your password" value={formData.password}/>
-                       <div className="buttonStrip">
-                              <h1 className="showPassButton">Show Password</h1>
-                              <button className="submitButton">Login</button>
-                       </div>
+                       <input className="credentialInput" name="email" type="name" onChange={(e)=>{trgrChange(e)}} placeholder="Enter your email" value={formData.email}/>
+                       <input className="credentialInput" name="password" type={(formData.showPass)?"text":"password"} onChange={(e)=>{trgrChange(e)}} placeholder="Enter your password" value={formData.password}/>
+                       
+                       {(formData.choice=="Admin")?<input className="credentialInput" placeholder="Enter the admin key" type="text" name="adminKey" onChange={(e)=>{trgrChange(e)}} value={formData.adminKey}/>:""}
+
+                       <div className="choiceInputWrapper">
+                        
+                           <h1 onClick={trgrShowPass} className="showPassButton">{(formData.showPass)?"Hide Password":"Show Password"}</h1>
+
+                           <select className="choiceInput" name="choice"  value={formData.choice} onChange={(e)=>{trgrChange(e)}}>
+                               <option>Admin</option>
+                               <option>User</option>
+                           </select>
+                        </div>
+                      
+                       <button className="submitButton">SignUp</button>
                        <h1 className="suggestionText">Don't have an account ? <Link href="/auth/signup">SignUp</Link></h1>
 
                  </form>

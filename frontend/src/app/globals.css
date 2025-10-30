@@ -6,7 +6,15 @@
 }
 
 .credentialInput{
-   @apply border px-5 py-2 mt-5 border-black;
+   @apply border px-2 py-2 w-full mt-5 text-center;
+}
+
+.choiceInput{
+    @apply  my-2 ;
+}
+
+.choiceInputWrapper{
+    @apply w-full flex items-center;
 }
 
 .buttonStrip{
@@ -14,15 +22,15 @@
 }
 
 .submitButton{
-    @apply w-full h-full bg-black border border-black px-4 py-2 text-amber-50 rounded-2xl;
+    @apply w-full h-full bg-black border border-black px-4 py-2 text-amber-50 rounded-[10px];
 }
 
 .suggestionText{
-    @apply text-[10px];
+    @apply text-[12px] py-2 px-2;
 }
 
 .formBox{
-    @apply flex flex-col;
+    @apply flex flex-col px-4 min-[768px]:w-[30%] min-[600px]:w-[50%] w-[90%] py-10 rounded-2xl;
 }
 
 .formNavBar{
