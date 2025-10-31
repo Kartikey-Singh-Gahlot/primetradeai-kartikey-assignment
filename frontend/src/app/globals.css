@@ -47,7 +47,23 @@
 }
 
 .formWrapper{
-   @apply w-full h-full flex justify-center items-center
+   @apply w-full h-full flex justify-center items-center;
+}
+
+.noteTemplateWrapper{
+   @apply w-full h-full flex justify-center items-center;
+}
+
+.noteTemplateFormBox{
+   @apply flex flex-col px-4 min-[768px]:w-[60%] min-[600px]:w-[80%] w-[90%] py-10 rounded-2xl;  
+}
+
+.noteTemplateInput{
+    @apply border px-2 py-2 w-full my-3 text-center cursor-pointer whitespace-pre-wrap ;
+}
+
+.noteTemplateTextArea{
+    @apply border px-2 py-2 w-full my-3 cursor-pointer whitespace-pre-wrap overflow-y-scroll min-h-[200px];
 }
 
 .cardWrapper{
@@ -58,14 +74,15 @@
     @apply grid min-[790px]:grid-cols-3 min-[500px]:grid-cols-2  grid-cols-1 grid-rows-[auto] gap-4 ;
 }
 
-.card{
-  @apply  flex flex-col items-center border-black border box-border rounded-[10px] w-fit  ;
+.card {
+  @apply   flex flex-col justify-between  shadow-md border border-black  rounded-b-2xl rounded-tl-[10px] rounded-tr-[10px] transition-all duration-300 hover:scale-[1.02] hover:shadow-lg;
 }
 
-.cardTitle{
-  @apply  w-full text-center text-2xl py-4 px-2 bg-black text-white  rounded-tr-[10px] rounded-tl-[10px];
+.cardTitle {
+  @apply text-xl font-semibold mb-2 text-center rounded-tl-[10px] rounded-tr-[10px] text-white bg-black  py-2;
 }
 
 .cardContent {
-  @apply w-full px-4 py-4;
+  @apply text-black  whitespace-pre-wrap py-4 px-3;
 }
+

@@ -60,11 +60,11 @@ export default function Signin(){
     return(
         <main className="flex flex-col h-screen overflow-hidden">
              <header className="headerBar">
-
+                <h1 className={`text-amber-50 w-full text-center min-[760px]:text-2xl text-[20px]`}>The Notes Keeper</h1>
              </header>
 
-             <div className="formWrapper">
-                 <form className="formBox" onSubmit={trgrSubmission}>
+             <section className="formWrapper">
+                 <form className="formBox" onSubmit={(e)=>{trgrSubmission(e)}}>
 
                        <label className="w-full text-center text-3xl">Welcome Back</label>
 
@@ -79,7 +79,7 @@ export default function Signin(){
                        <h1 className="suggestionText">Don't have an account ? <Link  className="underline font-semibold" href="/auth/signup">Signup</Link></h1>
 
                  </form>
-             </div>
+             </section>
              
         </main>
     )

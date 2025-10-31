@@ -40,9 +40,45 @@ const showNotes = async (req, res)=>{
   }
 }
 
+const addNote = async (req, res)=>{
+  const {token} = req.cookies;
+    if(!token){
+       return res.status(401).json({
+           status : false,
+           body : "Not Authorized"
+       })
+    }
+    else{
+      try{
+       const {email} = jwt.verify(token, process.env.SECRETKEY);
+       const user = await userModel.findOne({email});
+       if(!user){
+        return res.status(404).json({
+            status : false,
+            body: "User not found"
+        })
+       }
+       const {title, content} = req.body;
+       const newNote = new notesModel({title, content, user:user._id});
+       await newNote.save();
+       
+       return res.status(200).json({
+         status : true,
+         body : newNote
+       })
+      }
+      catch(err){
+        res.status(500).json({
+         status : false,
+         body:`Error : ${err.message}`
+       })
+      }
+    }
+}
+
 const editNote = async (req, res)=>{
  try{
-
+ 
   }
   catch(err){
     
@@ -67,4 +103,4 @@ const getNote = async (req, res)=>{
   }
 }
 
-module.exports = { showNotes, editNote, getNote ,deleteNote };
+module.exports = { showNotes, editNote, getNote ,deleteNote ,addNote };
