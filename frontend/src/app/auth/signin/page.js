@@ -43,15 +43,15 @@ export default function Signin(){
        e.preventDefault();
        const unp = await fetch(`${process.env.NEXT_PUBLIC_BACKENDURL}/auth/signin`, {method:"POST", credentials:"include", headers:{"Content-Type": "application/json"}, body: JSON.stringify({email:formData.email, password:formData.password})});
        const pr  = await unp.json();
-       alert(pr.body);
        if(pr.status){
-        console.log(pr);
+          alert(pr.body);
           setTimeout(()=>{
              router.push("/");
           },1000)
        }
        else{
-        return;
+          alert("User Doesn't exists redirecting...");
+          router.push("/auth/signup");
        }
     }
 
@@ -68,8 +68,8 @@ export default function Signin(){
 
                        <label className="w-full text-center text-3xl">Welcome Back</label>
 
-                       <input className="credentialInput" autoFocus name="email" type="email" onChange={(e)=>{trgrChange(e)}} placeholder="Enter your email" value={formData.email}/>
-                       <input className="credentialInput" name="password" type={(formData.showPass)?"text":"password"} onChange={(e)=>{trgrChange(e)}} placeholder="Enter your password" value={formData.password}/>
+                       <input className="credentialInput" autoFocus minLength={2} name="email" type="email" onChange={(e)=>{trgrChange(e)}} placeholder="Enter your email" value={formData.email}/>
+                       <input className="credentialInput" minLength={8}  name="password" type={(formData.showPass)?"text":"password"} onChange={(e)=>{trgrChange(e)}} placeholder="Enter your password" value={formData.password}/>
                        
                        <div className="choiceInputWrapper">
                            <h1 onClick={trgrShowPass} className="showPassButton">{(formData.showPass)?"✖ Hide Password":"✔ Show Password"}</h1>

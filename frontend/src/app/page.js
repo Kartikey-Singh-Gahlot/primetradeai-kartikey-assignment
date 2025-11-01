@@ -2,6 +2,7 @@
 import {useState, useEffect} from 'react';
 import { useRouter } from "next/navigation";
 import Link from 'next/link';
+import Dashboard from './dashboard';
 
 export default function Home() {
  
@@ -10,17 +11,20 @@ export default function Home() {
  const router = useRouter();
 
   async function trgrSignOut(){
+    const choice = confirm("Confirm LogOut");
+    if(!choice){
+      return;
+    }
     const unp = await fetch(`${process.env.NEXT_PUBLIC_BACKENDURL}/auth/signout`, {method:"POST", credentials:"include", headers:{"Content-Type": "application/json"}});
     const pr = await unp.json();
     if(pr.status){
-      router.push("/auth/signup");
+      setTimeout(()=>{
+        router.push("/auth/signup");
+      },1000)
     }
     return;
   }
 
-  async function trgrAddNote() {
-    
-  }
 
   
 
@@ -34,7 +38,7 @@ export default function Home() {
       }
       else{
        if((pr.adminStatus)){
-        setAdminAccess(true);
+         setAdminAccess(true);
        }
         const unNotes = await fetch(`${process.env.NEXT_PUBLIC_BACKENDURL}/notes`, {method:"GET", credentials:"include"});
         const prNotes = await unNotes.json();
@@ -70,12 +74,13 @@ export default function Home() {
           </div>
 
           <ul className='cardBox '>
-              {(userNotes?.length>0)? userNotes.map((i, idx)=>{ return <li className='card' key={idx}><Link href={`note/${i._id}`}><h1 className='cardTitle'>{i.title}</h1> <p className='cardContent line-clamp-3'>{i.content}</p> </Link> </li>}) :<li>Nothing here to show</li>}
+              {(userNotes?.length>0)? userNotes.map((i, idx)=>{ return <li className='card' key={idx}><Link href={`note/${i._id}`}><h1 className='cardTitle'>{i.title}</h1> <p className='cardContent line-clamp-3'>{i.content}</p> </Link> </li>}) :<li className='emptyText '>Nothing here to show</li>}
           </ul>
       </section>
       
-      
-
+    
+      {(adminAccess)?<Dashboard/>:""}
+    
    </main>
   );
 }

@@ -59,11 +59,11 @@
 }
 
 .noteTemplateInput{
-    @apply border px-2 py-2 w-full my-3 text-center cursor-pointer whitespace-pre-wrap ;
+    @apply border px-2 py-2 w-full my-3 text-center whitespace-pre-wrap cursor-text ;
 }
 
 .noteTemplateTextArea{
-    @apply border px-2 py-2 w-full my-3 cursor-pointer whitespace-pre-wrap overflow-y-scroll min-h-[200px];
+    @apply border px-2 py-2 w-full my-3 cursor-text whitespace-pre-wrap overflow-y-scroll min-h-[200px];
 }
 
 .cardWrapper{
@@ -83,6 +83,11 @@
 }
 
 .cardContent {
-  @apply text-black  whitespace-pre-wrap py-4 px-3;
+  @apply text-black  whitespace-pre-wrap py-4 px-3 m-3;
 }
+
+.emptyText{
+    @apply w-full text-[15px] px-5 flex items-center gap-2;
+}
+
 

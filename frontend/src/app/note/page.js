@@ -1,10 +1,14 @@
 "use client";
 
 import Link from "next/link"
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useParams } from "next/navigation";
+
+
 
 export default function AddNote(){
+
+ const router = useRouter();
 
  function trgrChange(event){
    setFormData((prev)=>{
@@ -13,13 +17,24 @@ export default function AddNote(){
  }
 
  async function trgrSubmission(event){
+       const choice = confirm("Confirm Save ?");
+       if(!choice){
+         return;
+       }
        event.preventDefault();
        const unpFormData = await fetch(`${process.env.NEXT_PUBLIC_BACKENDURL}/notes`, {method:"POST", credentials:"include", headers:{"Content-Type": "application/json"}, body:JSON.stringify(formData)});
        const prFormData = await unpFormData.json();
-       console.log(prFormData);
+       if(prFormData.status){
+              setTimeout(()=>{
+                router.push("/");
+              },1000)
+       }
+       else{
+           alert(prFormData.body);
+       }
  }
 
- const [formData, setFormData] = useState({title:"", content:""});
+ const [formData, setFormData] = useState({title:"Untitled", content:"Empty"});
 
  
 
@@ -33,12 +48,12 @@ export default function AddNote(){
 
                      <label className="w-full text-center text-3xl">Add A New Note</label>
 
-                     <input    onChange={(e)=>{trgrChange(e)}} className="noteTemplateInput"    name="title"   value={formData.title} type="text" placeholder="Enter your title"/>
-                     <textarea onChange={(e)=>{trgrChange(e)}} className="noteTemplateTextArea" name="content" value={formData.content} type="text" placeholder="Enter your title"/>
-                     <div className="flex items-center">
+                     <input required      onChange={(e)=>{trgrChange(e)}} className="noteTemplateInput"    name="title"   value={formData.title} type="text" placeholder="Enter your title"/>
+                     <textarea  required  onChange={(e)=>{trgrChange(e)}} className="noteTemplateTextArea" name="content" value={formData.content} type="text" placeholder="Enter your title"/>
+                     <Link href="/" className="flex items-center">
                         <img src="/goBackIcon.png" className="h-10"/>
                         <h1 className="text-[15px]">Go Back</h1>
-                     </div>
+                     </Link>
                      <div className="buttonStrip">
                             <button type="submit" className="submitButton">Submit</button>
                      </div>
